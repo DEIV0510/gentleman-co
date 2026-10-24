@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CATEGORIES, brands, products, searchProducts } from '../data/products'
+import { CATEGORIES, brands, formatCOP, products, searchProducts } from '../data/products'
 import ProductCard from './ProductCard'
 import ProductRow from './ProductRow'
 import Reveal from './Reveal'
@@ -29,16 +29,51 @@ const SECTION_DEFS = [
   { key: CATEGORIES.UNISEX, label: 'Perfumería Unisex', filterKey: 'unisex', Icon: IconMoon },
 ]
 
+// Precio más bajo real del catálogo, para el "Desde …" del encabezado.
+const cheapest = products.reduce((min, p) => (p.price < min.price ? p : min), products[0])
+const fromLabel = `Desde ${formatCOP(cheapest.price)}${cheapest.sizes?.[0]?.label ? ` · ${cheapest.sizes[0].label}` : ''}`
+
+// Búsqueda y filtros se guardan en la sesión: al abrir una ficha y volver
+// con "Atrás", el catálogo sigue como el cliente lo dejó.
+const FILTERS_KEY = 'gentleman-catalog-filters'
+const DEFAULT_FILTERS = { query: '', category: 'todos', brand: 'todas', sort: 'orden' }
+
+function readFilters() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(FILTERS_KEY) || 'null')
+    if (!saved || typeof saved !== 'object') return DEFAULT_FILTERS
+    return {
+      query: typeof saved.query === 'string' ? saved.query : '',
+      category: CATEGORY_FILTERS.some((f) => f.key === saved.category) ? saved.category : 'todos',
+      brand: saved.brand === 'todas' || brands.includes(saved.brand) ? saved.brand : 'todas',
+      sort: SORTS.some((s) => s.key === saved.sort) ? saved.sort : 'orden',
+    }
+  } catch {
+    return DEFAULT_FILTERS
+  }
+}
+
 export default function Catalog() {
-  const [query, setQuery] = useState('')
-  const [category, setCategory] = useState('todos')
-  const [brand, setBrand] = useState('todas')
-  const [sort, setSort] = useState('orden')
+  const [initial] = useState(readFilters)
+  const [query, setQuery] = useState(initial.query)
+  const [category, setCategory] = useState(initial.category)
+  const [brand, setBrand] = useState(initial.brand)
+  const [sort, setSort] = useState(initial.sort)
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(FILTERS_KEY, JSON.stringify({ query, category, brand, sort }))
+    } catch {
+      // sin sessionStorage (modo privado estricto): los filtros solo duran en la página
+    }
+  }, [query, category, brand, sort])
 
   useEffect(() => {
     function handler(e) {
+      if (!CATEGORY_FILTERS.some((f) => f.key === e.detail)) return
       setCategory(e.detail)
       setQuery('')
+      setBrand('todas')
     }
     window.addEventListener('gentleman-co:filter-category', handler)
     return () => window.removeEventListener('gentleman-co:filter-category', handler)
@@ -87,7 +122,7 @@ export default function Catalog() {
             Descubre tu fragancia
           </h2>
           <p className="mt-3 font-body text-sm text-ink-300 sm:text-base">
-            {products.length} fragancias inspiradas, mismo frasco Gentleman Co. Desde $55.000 COP · 50 ml.
+            {products.length} fragancias inspiradas, mismo frasco Gentleman Co. {fromLabel}.
           </p>
           {HALLOWEEN_ACTIVE && (
             <p className="mt-1 font-display text-sm italic text-ember-300">{halloweenCopy.catalogLine}</p>

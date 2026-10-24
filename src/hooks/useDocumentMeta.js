@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { SITE_URL } from '../data/site'
 
 const DEFAULT_TITLE = 'Gentleman Co | Perfumería de Alta Calidad en Ibagué'
 const DEFAULT_DESCRIPTION =
@@ -45,7 +46,7 @@ function setJsonLd(id, data) {
 // página de inicio no quede con metadatos de un producto.
 export default function useDocumentMeta({ title, description, path, jsonLd } = {}) {
   useEffect(() => {
-    const origin = window.location.origin
+    const origin = SITE_URL
     document.title = title || DEFAULT_TITLE
     setMeta('description', description || DEFAULT_DESCRIPTION)
     setMeta('og:title', title || DEFAULT_TITLE, 'property')
@@ -61,6 +62,8 @@ export default function useDocumentMeta({ title, description, path, jsonLd } = {
       setMeta('description', DEFAULT_DESCRIPTION)
       setMeta('og:title', DEFAULT_TITLE, 'property')
       setMeta('og:description', DEFAULT_DESCRIPTION, 'property')
+      setMeta('twitter:title', DEFAULT_TITLE)
+      setMeta('twitter:description', DEFAULT_DESCRIPTION)
       setMeta('og:url', `${origin}/`, 'property')
       setCanonical(`${origin}/`)
       setJsonLd('product-jsonld', null)

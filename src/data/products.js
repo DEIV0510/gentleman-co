@@ -568,17 +568,27 @@ export function formatCOP(amount) {
   return `$${amount.toLocaleString('es-CO')} COP`
 }
 
+// Minúsculas, sin tildes y sin signos: "L'Immensité" → "l immensite".
 function normalize(str) {
   return str
     .toLowerCase()
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
 }
 
+const GENDER_WORDS = { hombre: 'hombre caballero', mujer: 'mujer dama', unisex: 'unisex' }
+
+// Cada palabra buscada tiene que aparecer (en cualquier orden) en el nombre,
+// la marca o la categoría: "sauvage dior" o "dior sauvage" encuentran Sauvage.
 export function searchProducts(list, query) {
-  const q = normalize(query.trim())
-  if (!q) return list
-  return list.filter((p) => normalize(`${p.title} ${p.brand} ${p.fullName}`).includes(q))
+  const words = normalize(query).split(' ').filter(Boolean)
+  if (words.length === 0) return list
+  return list.filter((p) => {
+    const haystack = normalize(`${p.title} ${p.brand} ${p.fullName} ${GENDER_WORDS[p.gender] || ''}`)
+    return words.every((w) => haystack.includes(w))
+  })
 }
 
 export function getProductById(id) {

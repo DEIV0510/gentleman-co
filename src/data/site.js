@@ -2,6 +2,10 @@
 // No se inventan precios, nombres de fragancias ni categorías: solo se usa
 // la información que existe realmente (etiqueta del frasco, logo, datos de contacto).
 
+// Dirección oficial del sitio: canonical, datos estructurados y sitemap
+// apuntan siempre aquí (no a www ni a la dirección desde la que se abra).
+export const SITE_URL = 'https://gentlemanparfum.com'
+
 export const brand = {
   name: 'Gentleman Co',
   tagline: 'Perfumería de alta calidad',

@@ -20,6 +20,7 @@ export default function WhatsAppButton({ hideForMenu = false }) {
   const hidden = hideForMenu || nearFooter
 
   return (
+    <aside aria-label="Contacto rápido por WhatsApp">
     <a
       href={waLink(waMessages.catalog)}
       target="_blank"
@@ -42,5 +43,6 @@ export default function WhatsAppButton({ hideForMenu = false }) {
         </span>
       )}
     </a>
+    </aside>
   )
 }

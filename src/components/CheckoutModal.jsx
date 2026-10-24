@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { formatCOP } from '../data/products'
-import { buildOrderMessage, paymentMethods } from '../data/cart'
+import { buildOrderMessage, paymentMethods, promoNotice } from '../data/cart'
 import { brand, waLink } from '../data/site'
 import { useCart } from '../context/CartContext'
 import { AddiBadge } from './AddiOption'
@@ -36,17 +36,24 @@ const FIELDS = [
 ]
 
 export default function CheckoutModal() {
-  const { items, subtotal, checkoutOpen, closeCheckout, openCart, clearCart, notify } = useCart()
+  const { items, totalItems, subtotal, checkoutOpen, closeCheckout, openCart, clearCart, notify } = useCart()
+  // Los datos del cliente se conservan si vuelve al carrito o cierra el
+  // formulario sin querer; solo se borran cuando confirma que envió el pedido.
   const [customer, setCustomer] = useState(emptyCustomer)
   const [errors, setErrors] = useState({})
+  // Enlace de WhatsApp del pedido ya armado: mientras exista se muestra el
+  // paso "¿ya lo enviaste?" en vez del formulario.
+  const [sentUrl, setSentUrl] = useState(null)
   const panelRef = useRef(null)
   const firstFieldRef = useRef(null)
   const previouslyFocused = useRef(null)
+  const pressStartedOnBackdrop = useRef(false)
+  const promo = promoNotice(totalItems)
 
   useEffect(() => {
     if (!checkoutOpen) return
-    setCustomer(emptyCustomer)
     setErrors({})
+    setSentUrl(null)
     previouslyFocused.current = document.activeElement
     firstFieldRef.current?.focus()
     document.body.style.overflow = 'hidden'
@@ -92,6 +99,11 @@ export default function CheckoutModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // El carrito pudo vaciarse en otra pestaña mientras el formulario estaba abierto.
+    if (items.length === 0) {
+      handleBack()
+      return
+    }
     const nextErrors = {}
     for (const f of FIELDS) {
       if (!customer[f.key].trim()) nextErrors[f.key] = true
@@ -103,11 +115,34 @@ export default function CheckoutModal() {
       return
     }
 
-    const message = buildOrderMessage(items, customer)
-    window.open(waLink(message), '_blank', 'noopener,noreferrer')
+    // WhatsApp solo deja el mensaje escrito: el cliente todavía tiene que
+    // tocar "Enviar". Por eso el carrito NO se vacía aquí sino en handleSent.
+    // window.open sin 'noopener' para poder saber si se abrió; si el
+    // navegador lo bloquea, WhatsApp se abre en esta misma pestaña (el
+    // carrito queda guardado).
+    const url = waLink(buildOrderMessage(items, customer))
+    const win = window.open(url, '_blank')
+    if (win) win.opener = null
+    else window.location.href = url
+    setSentUrl(url)
+  }
+
+  const handleSent = () => {
     clearCart()
+    setCustomer(emptyCustomer)
+    setSentUrl(null)
     closeCheckout()
-    notify('Pedido enviado — te contactaremos por WhatsApp para confirmar')
+    notify('¡Gracias! Te contactaremos por WhatsApp para confirmar tu pedido')
+  }
+
+  // Cerrar al tocar el fondo solo si el toque empezó y terminó en el fondo:
+  // seleccionar texto de un campo arrastrando hacia afuera no cierra nada.
+  const onBackdropPointerDown = (e) => {
+    pressStartedOnBackdrop.current = e.target === e.currentTarget
+  }
+  const onBackdropClick = (e) => {
+    if (e.target === e.currentTarget && pressStartedOnBackdrop.current) closeCheckout()
+    pressStartedOnBackdrop.current = false
   }
 
   return (
@@ -116,12 +151,12 @@ export default function CheckoutModal() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="checkout-title"
-      onClick={closeCheckout}
+      onPointerDown={onBackdropPointerDown}
+      onClick={onBackdropClick}
     >
       <div
         ref={panelRef}
         className="relative flex max-h-[94vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-gold-500/25 bg-night-950 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9),0_0_70px_-30px_rgba(255,106,0,0.45)] sm:rounded-3xl"
-        onClick={(e) => e.stopPropagation()}
       >
         {HALLOWEEN_ACTIVE && (
           <>
@@ -156,6 +191,34 @@ export default function CheckoutModal() {
           </button>
         </div>
 
+        {sentUrl ? (
+          <div className="relative flex flex-col items-center gap-4 px-6 py-8 text-center sm:px-8">
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366] ring-1 ring-[#25D366]/40">
+              <IconWhatsApp className="h-6 w-6" />
+            </span>
+            <p className="font-display text-xl text-cream-50">Tu pedido está listo en WhatsApp</p>
+            <p className="max-w-sm font-body text-sm leading-relaxed text-cream-200/80">
+              Solo falta tocar <strong className="font-medium text-cream-50">Enviar</strong> en WhatsApp para que
+              nos llegue. Si no se abrió, ábrelo con el botón de abajo.
+            </p>
+            <a
+              href={sentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01]"
+            >
+              <IconWhatsApp className="h-4 w-4" />
+              Abrir WhatsApp
+            </a>
+            <button
+              type="button"
+              onClick={handleSent}
+              className="w-full rounded-full border border-gold-500/40 py-3.5 font-body text-sm uppercase tracking-wide text-gold-200 transition-colors hover:border-gold-300 hover:bg-gold-500 hover:text-night-950"
+            >
+              Listo, ya lo envié
+            </button>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit} className="relative flex flex-col gap-6 px-6 py-6 sm:px-8">
           <div className="rounded-2xl border border-gold-500/20 bg-night-800 p-4">
             <p className="font-body text-xs uppercase tracking-wide text-ink-300">Resumen del pedido</p>
@@ -251,9 +314,14 @@ export default function CheckoutModal() {
           </div>
 
           <div className="flex items-center justify-between border-t border-gold-500/15 pt-5">
-            <span className="font-display text-base text-cream-50">Total del pedido</span>
+            <span className="font-display text-base text-cream-50">{promo ? 'Total sin promoción' : 'Total del pedido'}</span>
             <span className="font-display text-2xl tabular-nums text-gold-300">{formatCOP(subtotal)}</span>
           </div>
+          {promo && (
+            <p className="-mt-3 rounded-xl border border-gold-500/25 bg-gold-500/10 px-3 py-2 text-center font-body text-xs leading-relaxed text-gold-200">
+              {promo}
+            </p>
+          )}
 
           <button
             type="submit"
@@ -266,6 +334,7 @@ export default function CheckoutModal() {
             Tu pedido se enviará a {brand.name} por WhatsApp para confirmar disponibilidad y coordinar el envío.
           </p>
         </form>
+        )}
       </div>
     </div>
   )

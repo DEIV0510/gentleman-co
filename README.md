@@ -722,6 +722,60 @@ la inspiración desenfocada atrás, se compusieron así con
 El recorte de "Cloud" que venía en el mismo lote no se usó: ese producto ya
 tenía foto propia del cliente.
 
+## Revisión general (24 de octubre de 2026)
+
+Auditoría completa: datos del catálogo, las 283 fichas una por una, compra
+completa en escritorio y celular, anchos de 320 a 1920 px, accesibilidad con
+axe-core, servidor de Hostinger y el sitio con Halloween apagado. Se
+corrigió:
+
+- **Checkout**: ya no vacía el carrito ni dice "Pedido enviado" antes de
+  tiempo. Al confirmar se abre WhatsApp (si el navegador bloquea la ventana,
+  se abre en la misma pestaña) y aparece el paso "Tu pedido está listo en
+  WhatsApp" con "Abrir WhatsApp" y "Listo, ya lo envié" (solo eso vacía el
+  carrito). Los datos del formulario se conservan al volver al carrito, y
+  tocar el fondo solo cierra si el toque empezó y terminó ahí.
+- **Carrito guardado**: al cargar se rehace desde el catálogo actual
+  (precio vigente, productos retirados fuera, talla "Presentación" vieja →
+  "50 ml", líneas repetidas unidas, cantidades inválidas fuera) y se
+  sincroniza entre pestañas.
+- **Promoción 3 x $130.000** (`PROMO_3X` en `data/campaign.js`): independiente
+  de Halloween, sigue visible al apagar la campaña. Siempre es la pieza HTML
+  con la marca Gentleman Co (la imagen original del cliente dice "NARCISO
+  PARFUM"); sin campaña queda en negro y dorado. Con 3 o más fragancias el
+  carrito y el pedido avisan que la promo se aplica al confirmar por
+  WhatsApp ("Total sin promoción").
+- **Búsqueda**: por palabras en cualquier orden y sin importar signos ni
+  tildes ("dior sauvage", "l immensite"); también "caballero", "dama",
+  "unisex".
+- **Catálogo**: Hombre/Mujer/Unisex limpian el filtro de marca; búsqueda y
+  filtros se conservan al volver de una ficha; el "Desde $55.000 COP · 50 ml"
+  se calcula del catálogo.
+- **Navegación** (`ScrollManager.jsx`): "Atrás" vuelve al mismo punto de la
+  página; las demás navegaciones suben de inmediato; un enlace a la sección
+  en la que ya se está también funciona. Direcciones inexistentes van al
+  inicio (`path="*"`). Cada ficha arranca de cero (`key`), sin arrastrar la
+  foto o talla de la anterior.
+- **Red de seguridad**: `ErrorBoundary.jsx` muestra "Recargar / Escribir por
+  WhatsApp" en vez de una página en blanco si algo falla.
+- **SEO**: el canonical ya no va fijo en `index.html` (se servía igual en las
+  283 fichas); lo pone `useDocumentMeta` con `SITE_URL` (`data/site.js`) en el
+  inicio y en cada ficha. `sitemap.xml` se genera solo en cada build con las
+  283 fichas (`scripts/generate-sitemap.mjs`). La imagen para compartir es
+  `public/og-gentleman-co.jpg` (logo de Gentleman Co,
+  `scripts/generate-og-image.mjs`); la anterior mostraba la etiqueta
+  "NARCISO PARFUM".
+- **Servidor** (`public/.htaccess`): www → sin www (301), `/default.php` de
+  Hostinger → inicio, `index.html` se revalida en cada visita y el JS (que
+  Hostinger sirve como `application/x-javascript`) se cachea un año.
+- Accesibilidad: el botón flotante de WhatsApp va dentro de un `<aside>`
+  con nombre; axe-core sin observaciones.
+
+Halloween sigue siendo manual (decisión del usuario): para apagarlo, poner
+`HALLOWEEN_ACTIVE = false` en `data/campaign.js`, compilar y subir con
+`scripts/ftp-sync.mjs`. Ya se probó el sitio en ese modo: sin restos de la
+campaña, sin errores ni desbordes.
+
 ## Estructura
 
 ```
@@ -733,7 +787,8 @@ src/
                 Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal,
                 HalloweenFx, HalloweenArt, HalloweenPromoBar, GiftGuide,
                 SectionDivider, PromoStrip, PromoBanner, AddiBanner,
-                BannerCard, AddiOption, FeaturedLaunches
+                BannerCard, AddiOption, FeaturedLaunches,
+                ErrorBoundary, ScrollManager
   context/CartContext.jsx  estado global del carrito (persistido en localStorage)
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces

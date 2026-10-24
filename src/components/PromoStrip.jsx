@@ -3,16 +3,17 @@ import PromoBanner from './PromoBanner'
 import AddiBanner from './AddiBanner'
 import { Fog } from './HalloweenFx'
 import { BatFlight } from './HalloweenArt'
-import { HALLOWEEN_ACTIVE } from '../data/campaign'
+import { HALLOWEEN_ACTIVE, PROMO_3X } from '../data/campaign'
 
 // Franja con las dos piezas del cliente: la promo "elige 3 fragancias por
 // $130.000" y el aviso de Addi. Desde 640 px van lado a lado, cada una a la
 // mitad del ancho — una fila corta en vez de dos banners a todo el ancho
 // (cada uno de ~725 px de alto en escritorio) que empujaban el catálogo casi
 // dos pantallas hacia abajo. En móvil se apilan a todo el ancho.
-// La promo es parte de la campaña: si se apaga HALLOWEEN_ACTIVE queda solo
-// Addi, centrado. Si cambias columnas, espacios o el contenedor, ajusta SIZES
-// en BannerCard.
+// La promo tiene su propio interruptor (PROMO_3X en data/campaign.js): sin
+// Halloween se muestra con la imagen original del cliente; si se apaga la
+// promo queda solo Addi, centrado. Si cambias columnas, espacios o el
+// contenedor, ajusta SIZES en BannerCard.
 export default function PromoStrip() {
   return (
     <section className="relative overflow-hidden bg-night-950 py-8 sm:py-12">
@@ -29,10 +30,10 @@ export default function PromoStrip() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal
           className={
-            HALLOWEEN_ACTIVE ? 'grid gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6' : 'mx-auto max-w-lg'
+            PROMO_3X.active ? 'grid gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6' : 'mx-auto max-w-lg'
           }
         >
-          {HALLOWEEN_ACTIVE && <PromoBanner />}
+          {PROMO_3X.active && <PromoBanner />}
           <AddiBanner />
         </Reveal>
       </div>

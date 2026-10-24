@@ -31,24 +31,28 @@ export default function Socials() {
         </Reveal>
 
         <Reveal delay={100} className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href={brand.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hw-btn-glow flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full border border-gold-400/40 bg-night-950/60 px-6 py-3.5 font-body text-sm uppercase tracking-wide text-cream-50 hover:border-gold-400 hover:bg-gold-500/10 sm:w-auto"
-          >
-            <IconInstagram className="h-4 w-4" />
-            Instagram
-          </a>
-          <a
-            href={brand.tiktokUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hw-btn-glow flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full border border-gold-400/40 bg-night-950/60 px-6 py-3.5 font-body text-sm uppercase tracking-wide text-cream-50 hover:border-gold-400 hover:bg-gold-500/10 sm:w-auto"
-          >
-            <IconTikTok className="h-4 w-4" />
-            TikTok
-          </a>
+          {brand.instagramUrl && (
+            <a
+              href={brand.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hw-btn-glow flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full border border-gold-400/40 bg-night-950/60 px-6 py-3.5 font-body text-sm uppercase tracking-wide text-cream-50 hover:border-gold-400 hover:bg-gold-500/10 sm:w-auto"
+            >
+              <IconInstagram className="h-4 w-4" />
+              Instagram
+            </a>
+          )}
+          {brand.tiktokUrl && (
+            <a
+              href={brand.tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hw-btn-glow flex w-full max-w-xs items-center justify-center gap-2.5 rounded-full border border-gold-400/40 bg-night-950/60 px-6 py-3.5 font-body text-sm uppercase tracking-wide text-cream-50 hover:border-gold-400 hover:bg-gold-500/10 sm:w-auto"
+            >
+              <IconTikTok className="h-4 w-4" />
+              TikTok
+            </a>
+          )}
         </Reveal>
       </div>
     </section>

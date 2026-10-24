@@ -7,6 +7,14 @@
 // calabazas, niebla, brasas, rótulos y secciones de temporada).
 export const HALLOWEEN_ACTIVE = true
 
+// Promoción real del cliente: "Elige 3 fragancias por $130.000 COP". Es
+// independiente de Halloween: sigue visible cuando se apague la campaña
+// (decisión del usuario, 2026-10-24). Con `active: false` desaparecen el
+// banner y el aviso de la promo en el carrito y en el pedido de WhatsApp.
+// El descuento no se calcula en el carrito: se aplica al confirmar por
+// WhatsApp (hay perfumes a $60.000 y combos mixtos que decide el negocio).
+export const PROMO_3X = { active: true, units: 3, price: 130000 }
+
 // Solo rótulos de campaña. Los textos comerciales (hero, catálogo, botones,
 // fichas) no cambian: aquí viven únicamente las líneas que antes decían
 // "San Valentín" o hablaban de amor.

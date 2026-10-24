@@ -14,7 +14,7 @@ import Reveal from '../components/Reveal'
 import { CATEGORIES, formatCOP, getProductById, getRelatedProducts } from '../data/products'
 import { getProductImage } from '../data/productImages'
 import { getFragranceInfo } from '../data/fragranceInfo'
-import { waLink } from '../data/site'
+import { SITE_URL, waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import useDocumentMeta from '../hooks/useDocumentMeta'
 import { IconWhatsApp, IconBagPlus, IconPumpkin } from '../components/icons'
@@ -37,16 +37,20 @@ function buildGallery(product) {
   ]
 }
 
+// Un slug inexistente vuelve al inicio. `key` hace que cada ficha arranque de
+// cero: al pasar de un perfume a otro (ej. desde "También podría gustarte")
+// no se arrastran la foto ni la talla elegidas en la ficha anterior.
 export default function ProductDetailPage() {
   const { slug } = useParams()
   const product = getProductById(slug)
+  if (!product) return <Navigate to="/" replace />
+  return <ProductDetail key={product.id} product={product} />
+}
+
+function ProductDetail({ product }) {
   const [active, setActive] = useState(0)
   const [selectedSize, setSelectedSize] = useState(null)
   const { addItem } = useCart()
-
-  if (!product) {
-    return <Navigate to="/" replace />
-  }
 
   const info = getFragranceInfo(product.id)
   const categoryLabel =
@@ -70,14 +74,14 @@ export default function ProductDetailPage() {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: `Gentleman Co — ${product.title}`,
-      image: `${window.location.origin}${gallery[0].jpg}`,
+      image: `${SITE_URL}${gallery[0].jpg}`,
       description: `Fragancia inspirada, ${product.category.toLowerCase()}.`,
       brand: { '@type': 'Brand', name: 'Gentleman Co' },
       offers: {
         '@type': 'Offer',
         priceCurrency: 'COP',
         price: product.price,
-        url: `${window.location.origin}/perfumes/${product.id}`,
+        url: `${SITE_URL}/perfumes/${product.id}`,
       },
     },
   })
@@ -258,7 +262,7 @@ export default function ProductDetailPage() {
               />
             </div>
 
-            {(info?.topNotes?.length || info?.heartNotes?.length || info?.baseNotes?.length) && (
+            {(info?.topNotes?.length > 0 || info?.heartNotes?.length > 0 || info?.baseNotes?.length > 0) && (
               <div className="mt-8 border-t border-gold-500/15 pt-6">
                 <p className="font-display text-lg text-cream-50">Perfil olfativo</p>
                 <div className="mt-3 space-y-2.5 font-body text-sm text-cream-200/75">
@@ -281,7 +285,7 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {(info?.occasions?.length || info?.season?.length || info?.timeOfDay?.length) && (
+            {(info?.occasions?.length > 0 || info?.season?.length > 0 || info?.timeOfDay?.length > 0) && (
               <div className="mt-8 border-t border-gold-500/15 pt-6">
                 <p className="font-display text-lg text-cream-50">¿Cuándo usarlo?</p>
                 <div className="mt-3 flex flex-wrap gap-2">

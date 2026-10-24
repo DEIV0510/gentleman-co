@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { getProductById } from '../data/products'
 
 const STORAGE_KEY = 'gentleman-cart-v1'
 // Clave anterior (de cuando la marca era Narciso Parfum): se lee una vez para
@@ -15,10 +16,48 @@ function lineId(productId, sizeLabel) {
   return `${productId}__${sizeLabel}`
 }
 
+function toLine(product, size, qty) {
+  return {
+    lineId: lineId(product.id, size.label),
+    productId: product.id,
+    title: product.title,
+    brand: product.brand,
+    fullName: product.fullName,
+    category: product.category,
+    image: product.image,
+    sizeLabel: size.label,
+    price: size.price,
+    qty,
+  }
+}
+
+// El carrito guardado en el navegador puede venir de otra versión del sitio
+// (precios viejos, productos retirados, la talla genérica "Presentación" de
+// antes de que existiera "50 ml") o estar dañado. Al cargarlo se rehace cada
+// línea desde el catálogo ACTUAL: así el carrito y el pedido de WhatsApp
+// siempre muestran el precio vigente.
+function sanitizeItems(raw) {
+  if (!Array.isArray(raw)) return []
+  const lines = new Map()
+  for (const item of raw) {
+    if (!item || typeof item !== 'object') continue
+    const product = getProductById(item.productId)
+    const qty = Math.floor(Number(item.qty))
+    if (!product || !Number.isFinite(qty) || qty < 1) continue
+    const sizes = product.sizes || [{ label: DEFAULT_SIZE_LABEL, price: product.price }]
+    const size = sizes.find((s) => s.label === item.sizeLabel) || sizes[0]
+    const line = toLine(product, size, qty)
+    const existing = lines.get(line.lineId)
+    if (existing) existing.qty += qty
+    else lines.set(line.lineId, line)
+  }
+  return [...lines.values()]
+}
+
 function reducer(state, action) {
   switch (action.type) {
     case 'HYDRATE':
-      return Array.isArray(action.items) ? action.items : state
+      return sanitizeItems(action.items)
     case 'ADD': {
       const { product, size, qty } = action
       const id = lineId(product.id, size.label)
@@ -26,21 +65,7 @@ function reducer(state, action) {
       if (existing) {
         return state.map((i) => (i.lineId === id ? { ...i, qty: i.qty + qty } : i))
       }
-      return [
-        ...state,
-        {
-          lineId: id,
-          productId: product.id,
-          title: product.title,
-          brand: product.brand,
-          fullName: product.fullName,
-          category: product.category,
-          image: product.image,
-          sizeLabel: size.label,
-          price: size.price,
-          qty,
-        },
-      ]
+      return [...state, toLine(product, size, qty)]
     }
     case 'INCREMENT':
       return state.map((i) => (i.lineId === action.lineId ? { ...i, qty: i.qty + 1 } : i))
@@ -80,6 +105,21 @@ export function CartProvider({ children }) {
       // localStorage no disponible o JSON corrupto: seguir con carrito vacío
     }
     setHydrated(true)
+  }, [])
+
+  // Con la tienda abierta en varias pestañas, cada una toma el carrito que
+  // guardó la otra (si no, la última en guardar borraba lo de las demás).
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key !== STORAGE_KEY) return
+      try {
+        dispatch({ type: 'HYDRATE', items: e.newValue ? JSON.parse(e.newValue) : [] })
+      } catch {
+        // valor dañado en la otra pestaña: se conserva el carrito actual
+      }
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
   }, [])
 
   useEffect(() => {

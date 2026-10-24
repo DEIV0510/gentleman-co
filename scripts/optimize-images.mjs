@@ -155,11 +155,10 @@ async function run() {
     .toBuffer()
   await emit(sharp(labelBuf).resize({ width: 1100, withoutEnlargement: true }), 'label-detail')
 
-  // 4. OG image — 1200x630 cover crop for social sharing.
-  await sharp(heroTrim)
-    .resize({ width: 1200, height: 630, fit: 'cover', position: 'centre' })
-    .jpeg({ quality: 85, mozjpeg: true })
-    .toFile(path.join(PUBLIC, 'og-image.jpg'))
+  // 4. OG image: ya no sale de aquí. El recorte del frasco mostraba la
+  // etiqueta "NARCISO PARFUM" (Narciso ahora es otra marca); la imagen para
+  // compartir la genera scripts/generate-og-image.mjs con el logo de
+  // Gentleman Co (public/og-gentleman-co.jpg).
 
   // 5. Logo — trim the whitespace margin, then key out the white background for
   // real transparency (not just a cropped white box) so it sits cleanly on any surface.

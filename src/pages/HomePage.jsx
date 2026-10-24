@@ -12,8 +12,12 @@ import BrandSection from '../components/BrandSection'
 import Location from '../components/Location'
 import Socials from '../components/Socials'
 import FinalCTA from '../components/FinalCTA'
+import useDocumentMeta from '../hooks/useDocumentMeta'
 
 export default function HomePage() {
+  // Título, descripción y canonical del inicio (el canonical ya no va fijo en
+  // index.html, porque ese archivo se sirve también para cada ficha).
+  useDocumentMeta({ path: '/' })
   return (
     <>
       <Hero />

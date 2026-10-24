@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import LoadingScreen from './components/LoadingScreen'
 import Header from './components/Header'
 import HalloweenPromoBar from './components/HalloweenPromoBar'
@@ -28,6 +28,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/perfumes/:slug" element={<ProductDetailPage />} />
+          {/* Cualquier otra dirección (enlaces viejos o mal escritos) vuelve al inicio. */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />

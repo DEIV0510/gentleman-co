@@ -1,22 +1,38 @@
-# SPA fallback: sirve index.html para cualquier ruta que no sea un archivo
-# o carpeta real (equivalente al rewrite catch-all de vercel.json), para
-# que /perfumes/<slug> no de 404 al entrar directo o recargar la pagina.
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Una sola dirección oficial: www.gentlemanparfum.com -> gentlemanparfum.com
+  # (evita contenido duplicado en Google; el canonical apunta a la versión sin www).
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # Página de ejemplo que deja Hostinger al crear el sitio: lleva al inicio.
+  RewriteRule ^default\.php$ / [R=301,L]
+
+  # SPA fallback: sirve index.html para cualquier ruta que no sea un archivo
+  # o carpeta real (equivalente al rewrite catch-all de vercel.json), para
+  # que /perfumes/<slug> no de 404 al entrar directo o recargar la pagina.
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Cache largo para assets con hash en el nombre de archivo (Vite les pone
-# hash de contenido, asi que son seguros de cachear indefinidamente).
 <IfModule mod_expires.c>
   ExpiresActive On
+  # index.html se revisa en cada visita (responde 304 si no cambió): después
+  # de publicar, nadie se queda con una versión vieja que pida archivos viejos.
+  ExpiresByType text/html "access plus 0 seconds"
+  # Assets con hash de contenido en el nombre (Vite): seguros de cachear un
+  # año. Hostinger sirve el JS como application/x-javascript.
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
   ExpiresByType image/avif "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
 </IfModule>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { formatCOP } from '../data/products'
+import { promoNotice } from '../data/cart'
 import { useCart } from '../context/CartContext'
 import CartItemRow from './CartItemRow'
 import { AddiBadge } from './AddiOption'
@@ -12,7 +13,7 @@ import { HALLOWEEN_ACTIVE } from '../data/campaign'
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 export default function CartDrawer() {
-  const { items, subtotal, drawerOpen, closeCart, openCheckout } = useCart()
+  const { items, totalItems, subtotal, drawerOpen, closeCart, openCheckout } = useCart()
   const panelRef = useRef(null)
   const closeBtnRef = useRef(null)
   const previouslyFocused = useRef(null)
@@ -51,10 +52,11 @@ export default function CartDrawer() {
   }, [drawerOpen, closeCart])
 
   const isEmpty = items.length === 0
+  const promo = promoNotice(totalItems)
 
   return (
     <div
-      className={`fixed inset-0 z-[95] transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 z-[95] overflow-hidden transition-opacity duration-300 ease-out ${
         drawerOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
       }`}
       role="dialog"
@@ -86,7 +88,7 @@ export default function CartDrawer() {
             </h2>
             {!isEmpty && (
               <p className="mt-0.5 font-body text-xs text-ink-300">
-                {items.reduce((sum, i) => sum + i.qty, 0)} {items.reduce((sum, i) => sum + i.qty, 0) === 1 ? 'producto' : 'productos'}
+                {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
               </p>
             )}
           </div>
@@ -143,6 +145,11 @@ export default function CartDrawer() {
                 <span className="font-display text-base text-cream-50">Total</span>
                 <span className="font-display text-2xl tabular-nums text-gold-300">{formatCOP(subtotal)}</span>
               </div>
+              {promo && (
+                <p className="mt-3 rounded-xl border border-gold-500/25 bg-gold-500/10 px-3 py-2 text-center font-body text-xs leading-relaxed text-gold-200">
+                  {promo}
+                </p>
+              )}
 
               <button
                 type="button"
