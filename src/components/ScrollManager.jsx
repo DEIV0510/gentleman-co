@@ -36,7 +36,7 @@ export default function ScrollManager() {
   // La página "actual" se toma de una ref que se cambia ANTES de mover el
   // scroll de la página nueva: si no, el salto arriba al abrir una ficha se
   // guardaba como posición del catálogo y "Atrás" volvía al inicio.
-  const currentKey = useRef(key)
+  const currentKey = useRef(`${key}|${location.pathname}${location.search}`)
   useEffect(() => {
     let raf = 0
     const save = () => {
@@ -63,12 +63,23 @@ export default function ScrollManager() {
     }
   }, [])
 
+  // La primera página que carga el navegador siempre trae la clave 'default':
+  // por eso la posición se guarda junto con la dirección, y al cargar una
+  // página nueva (escribir la dirección, abrir un enlace) no se restaura nada;
+  // solo al recargar o al volver con Atrás/Adelante.
+  const firstRender = useRef(true)
+
   useLayoutEffect(() => {
-    currentKey.current = key
+    const storeKey = `${key}|${location.pathname}${location.search}`
+    currentKey.current = storeKey
     let raf = 0
     let attempts = 0
 
-    const saved = navigationType === 'POP' ? readPositions()[key] : undefined
+    const navEntry = typeof performance !== 'undefined' && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null
+    const initialRestorable = !!navEntry && (navEntry.type === 'reload' || navEntry.type === 'back_forward')
+    const canRestore = navigationType === 'POP' && (!firstRender.current || initialRestorable)
+    firstRender.current = false
+    const saved = canRestore ? readPositions()[storeKey] : undefined
     if (typeof saved === 'number') {
       // La página puede no tener todavía su alto completo (imágenes, catálogo):
       // se reintenta unos cuadros hasta poder llegar al punto guardado.
@@ -98,7 +109,7 @@ export default function ScrollManager() {
     }
     tryScroll()
     return () => cancelAnimationFrame(raf)
-  }, [key, hash, navigationType])
+  }, [key, hash, navigationType, location.pathname, location.search])
 
   return null
 }

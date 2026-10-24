@@ -12,15 +12,20 @@ const PUBLIC = path.join(ROOT, 'public')
 mkdirSync(OUT, { recursive: true })
 mkdirSync(PUBLIC, { recursive: true })
 
-const bottleSrc = path.join(SRC, 'botella-oficial-ambiente.png')
-const bottleOficialSrc = path.join(SRC, 'botella-oficial.png')
+// Desde el 24 de octubre de 2026 el frasco lleva la etiqueta GENTLEMAN CO.:
+// la foto de ambiente y las 3 escenas de categorías salen de las versiones
+// con la etiqueta nueva (source-material/gentleman/, generadas por
+// scripts/relabel-bottles.mjs a partir de los originales de esta carpeta), y
+// el frasco recortado es botella-gentleman.png.
+const bottleSrc = path.join(SRC, 'gentleman', 'ambiente.png')
+const bottleOficialSrc = path.join(SRC, 'botella-gentleman.png')
 const logoSrc = path.join(SRC, 'logo-gentleman-co.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 const lifestylePosterSrc = path.join(SRC, 'lifestyle-poster-raw.jpg')
 const studioPosterSrc = path.join(SRC, 'studio-poster-raw.jpg')
-const genderCaballeroSrc = path.join(SRC, 'gender-caballero-raw.png')
-const genderDamaSrc = path.join(SRC, 'gender-dama-raw.png')
-const genderUnisexSrc = path.join(SRC, 'gender-unisex-raw.png')
+const genderCaballeroSrc = path.join(SRC, 'gentleman', 'gender-caballero.png')
+const genderDamaSrc = path.join(SRC, 'gentleman', 'gender-dama.png')
+const genderUnisexSrc = path.join(SRC, 'gentleman', 'gender-unisex.png')
 
 async function emit(pipeline, outBase) {
   await pipeline.clone().webp({ quality: 82 }).toFile(path.join(OUT, `${outBase}.webp`))
@@ -192,7 +197,7 @@ async function run() {
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(path.join(OUT, 'crown-mark.png'))
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'crown-mark.webp'))
 
-  // 6c. Catalog bottle — real photo of our own bottle (its label still says Narciso) used
+  // 6c. Catalog bottle — real photo of our own bottle (etiqueta GENTLEMAN CO.) used
   // for every fragrance in the catalog (the business sells one bottle
   // format across all "inspired by" scents). This replaces an older photo
   // of the same bottle: the real hardware changed from a round ball cap to

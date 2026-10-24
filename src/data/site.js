@@ -52,11 +52,18 @@ export const waMessages = {
   order: 'Hola, Gentleman Co. Quiero hacer mi pedido. ¿Me ayudan con el proceso?',
 }
 
+// Sección "Hecho a mano" (3 videos del proceso, CraftProcess.jsx): oculta
+// desde el 24 de octubre de 2026 porque los videos muestran frascos con el
+// nombre NARCISO (otra marca). Al tener videos con el frasco Gentleman Co,
+// cambiar los archivos en src/assets/video/ y poner esto en true (vuelven la
+// sección y el enlace "Proceso" del menú).
+export const SHOW_PROCESS_VIDEOS = false
+
 export const navLinks = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Catálogo', href: '#catalogo' },
   { label: 'Nuestra Fragancia', href: '#fragancia' },
-  { label: 'Proceso', href: '#proceso' },
+  ...(SHOW_PROCESS_VIDEOS ? [{ label: 'Proceso', href: '#proceso' }] : []),
   { label: 'Encuentra tu Aroma', href: '#encuentra' },
   { label: 'Ubicación', href: '#ubicacion' },
 ]

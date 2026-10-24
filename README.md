@@ -9,10 +9,9 @@ Sitio web de marca para **Gentleman Co** (perfumería inspirada de alta calidad,
 >
 > **Nota de rebranding (2026-09-18):** el negocio se llamaba "Narciso Parfum" hasta esta
 > fecha — todo el historial de este README (catálogo, fotos, decisiones de contenido) es
-> de esa época y sigue siendo válido tal cual, solo cambió el nombre de marca. El frasco
-> físico real que se fotografía y se despacha hoy sigue con la etiqueta "Narciso Parfum"
-> (no hay empaque nuevo todavía) — por eso las fotos de producto no se tocaron, mientras
-> que marca/textos/SEO/checkout ya dicen "Gentleman Co" en todo el sitio. Ver
+> de esa época y sigue siendo válido tal cual, solo cambió el nombre de marca. Desde el
+> 24 de octubre de 2026 todas las fotos muestran el frasco con la etiqueta "GENTLEMAN
+> CO." (ver "Etiqueta Gentleman Co en todas las fotos" más abajo). Ver
 > `project_gentleman_co.md` (memoria del proyecto) para el detalle completo de la
 > migración.
 
@@ -721,6 +720,40 @@ la inspiración desenfocada atrás, se compusieron así con
 
 El recorte de "Cloud" que venía en el mismo lote no se usó: ese producto ya
 tenía foto propia del cliente.
+
+## Etiqueta Gentleman Co en todas las fotos (24 de octubre de 2026)
+
+El cliente mandó el frasco con la etiqueta nueva ("Perfume Gentleman Co. de
+Lujo.png", guardado como `source-material/botella-gentleman-original.png`):
+es el mismo render y el mismo encuadre que `botella-oficial.png`, solo cambia
+la etiqueta. Se reemplazó la etiqueta NARCISO en todas las imágenes:
+
+- **266 fotos de producto del cliente** — `scripts/relabel-bottles.mjs` +
+  `scripts/lib/relabel.mjs`: detecta la etiqueta vieja (rectángulo claro
+  rodeado del vidrio negro y con el mismo diseño: logo arriba, nombre grande,
+  líneas de texto; así no confunde cuadros o cajas del fondo), ajusta sus
+  cuatro bordes (los de arriba y abajo curvos, porque el frasco es redondo),
+  endereza la etiqueta nueva y la vuelve a curvar sobre esa forma, y le pasa
+  la luz y el color del papel original punto a punto, más un ajuste final de
+  tinte. Parte siempre de las fotos originales del commit `20b3e2c` (o de su
+  fuente de mejor calidad en `source-material/`), así que se puede volver a
+  correr sin degradar nada.
+- **17 fotos del lote de octubre** — se recompusieron con
+  `scripts/compose-nuevos-octubre.mjs` usando `source-material/botella-gentleman.png`
+  (la foto nueva con la silueta transparente del recorte oficial).
+- **Frasco recortado, foto de ambiente (portada, producto destacado, detalle
+  de etiqueta), 3 categorías y 2 lanzamientos** — las escenas con la
+  etiqueta nueva están en `source-material/gentleman/` y las usan
+  `optimize-images.mjs` y `apply-launch-teasers.mjs`.
+
+Verificación: en las 283 fotos finales la etiqueta detectada se parece más al
+diseño Gentleman que al Narciso (0 marcadas), más revisión visual de todas.
+
+**Sección "Hecho a mano" oculta** (`SHOW_PROCESS_VIDEOS = false` en
+`data/site.js`): sus 3 videos muestran frascos reales con el nombre NARCISO y
+un video no se puede corregir con la misma calidad. Al tener videos con el
+frasco Gentleman, cambiar los archivos de `src/assets/video/` y poner `true`
+(vuelven la sección y el enlace "Proceso" del menú).
 
 ## Revisión general (24 de octubre de 2026)
 

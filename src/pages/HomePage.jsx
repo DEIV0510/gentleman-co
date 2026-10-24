@@ -13,6 +13,7 @@ import Location from '../components/Location'
 import Socials from '../components/Socials'
 import FinalCTA from '../components/FinalCTA'
 import useDocumentMeta from '../hooks/useDocumentMeta'
+import { SHOW_PROCESS_VIDEOS } from '../data/site'
 
 export default function HomePage() {
   // Título, descripción y canonical del inicio (el canonical ya no va fijo en
@@ -27,7 +28,7 @@ export default function HomePage() {
       <GiftGuide />
       <WhyGentlemanCo />
       <ProductSpotlight />
-      <CraftProcess />
+      {SHOW_PROCESS_VIDEOS && <CraftProcess />}
       <Experience />
       <FindYourFragrance />
       <BrandSection />

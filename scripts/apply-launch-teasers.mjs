@@ -9,11 +9,14 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const OUT = path.join(ROOT, 'src', 'assets', 'img')
-const SRC_DIR = 'C:\\Users\\Lenovo\\Desktop\\NARCISO'
+// Desde el 24 de octubre de 2026: versiones con la etiqueta GENTLEMAN CO.
+// (scripts/relabel-bottles.mjs, a partir de source-material/launch-teasers/,
+// que son las mismas fotos que el cliente dejó en Desktop\NARCISO).
+const SRC_DIR = path.join(ROOT, 'source-material', 'gentleman')
 
 const ITEMS = [
-  { file: 'ChatGPT Image 6 sept 2026, 01_41_18.png', id: 'launch-xerjoff-torino21' },
-  { file: 'elivi.png', id: 'launch-elivi-unstoppable-hong-kong' },
+  { file: 'launch-torino21.png', id: 'launch-xerjoff-torino21' },
+  { file: 'launch-elivi.png', id: 'launch-elivi-unstoppable-hong-kong' },
 ]
 
 async function run() {

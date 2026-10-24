@@ -11,7 +11,7 @@
 //   fondo-limpio.jpg
 //   + recorte de inspiración (atrás, izquierda): sin halo del recorte,
 //     luz cálida, desenfoque leve, reflejo en el piso y sombra de contacto
-//   + source-material/botella-oficial.png (adelante, derecha): el recorte
+//   + source-material/botella-gentleman.png (adelante, derecha): el recorte
 //     real del frasco, con la luz dorada de la escena, borde iluminado a la
 //     derecha, reflejo y sombra
 //
@@ -30,7 +30,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const SRC = path.join(ROOT, 'source-material', 'nuevos-octubre-2026')
 const PLATE = path.join(SRC, 'fondo-limpio.jpg')
-const BOTTLE = path.join(ROOT, 'source-material', 'botella-oficial.png')
+// Frasco con la etiqueta GENTLEMAN CO. (desde el 24 de octubre de 2026; antes
+// botella-oficial.png, con la etiqueta NARCISO).
+const BOTTLE = path.join(ROOT, 'source-material', 'botella-gentleman.png')
 const OUT = path.join(ROOT, 'src', 'assets', 'img', 'products')
 const PREVIEW = process.argv[2]
 

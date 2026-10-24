@@ -104,6 +104,11 @@ export const CATEGORIES = {
 // El recorte de "Cloud" (Ariana Grande) que venía en el mismo lote no se
 // usó: ese producto ya tenía foto propia del cliente. Catálogo: 283 de 283
 // con foto propia.
+//
+// 2026-10-24 — etiqueta GENTLEMAN CO. en las 283 fotos (antes decían
+// NARCISO PARFUM): scripts/relabel-bottles.mjs para las del cliente y
+// compose-nuevos-octubre.mjs con source-material/botella-gentleman.png para
+// las 17 compuestas. Ver README, "Etiqueta Gentleman Co en todas las fotos".
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
   '212-sexy-carolina-herrera-mujer', '212-sexy-men-carolina-herrera-hombre', '212-vip-black-carolina-herrera-hombre', '212-vip-black-extra-carolina-herrera-hombre', '212-vip-black-i-love-ny-carolina-herrera-hombre', '212-vip-black-red-carolina-herrera-hombre',
