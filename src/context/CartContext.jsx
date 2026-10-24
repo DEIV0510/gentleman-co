@@ -1,6 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 
-const STORAGE_KEY = 'narciso-cart-v1'
+const STORAGE_KEY = 'gentleman-cart-v1'
+// Clave anterior (de cuando la marca era Narciso Parfum): se lee una vez para
+// no vaciarle el carrito a quien ya tenía productos guardados, y se borra.
+const LEGACY_STORAGE_KEY = 'narciso-cart-v1'
 
 // Tamaño por defecto para productos sin variantes reales (los 48 del
 // catálogo actual venden una sola presentación). No se muestra esta
@@ -70,7 +73,8 @@ export function CartProvider({ children }) {
   // StrictMode, que monta/desmonta el árbol dos veces en desarrollo).
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY)
+      localStorage.removeItem(LEGACY_STORAGE_KEY)
       if (raw) dispatch({ type: 'HYDRATE', items: JSON.parse(raw) })
     } catch {
       // localStorage no disponible o JSON corrupto: seguir con carrito vacío

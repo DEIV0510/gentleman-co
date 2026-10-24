@@ -48,26 +48,32 @@ export default function Footer() {
             >
               WhatsApp: {brand.whatsappDisplay}
             </a>
-            <div className="mt-2 flex items-center gap-2">
-              <a
-                href={brand.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-11 w-11 items-center justify-center text-ink-300 hover:text-gold-300"
-              >
-                <IconInstagram className="h-4 w-4" />
-              </a>
-              <a
-                href={brand.tiktokUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="flex h-11 w-11 items-center justify-center text-ink-300 hover:text-gold-300"
-              >
-                <IconTikTok className="h-4 w-4" />
-              </a>
-            </div>
+            {(brand.instagramUrl || brand.tiktokUrl) && (
+              <div className="mt-2 flex items-center gap-2">
+                {brand.instagramUrl && (
+                  <a
+                    href={brand.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="flex h-11 w-11 items-center justify-center text-ink-300 hover:text-gold-300"
+                  >
+                    <IconInstagram className="h-4 w-4" />
+                  </a>
+                )}
+                {brand.tiktokUrl && (
+                  <a
+                    href={brand.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="TikTok"
+                    className="flex h-11 w-11 items-center justify-center text-ink-300 hover:text-gold-300"
+                  >
+                    <IconTikTok className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           <div>

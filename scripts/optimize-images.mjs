@@ -193,7 +193,7 @@ async function run() {
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(path.join(OUT, 'crown-mark.png'))
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'crown-mark.webp'))
 
-  // 6c. Catalog bottle — real photo of the current Narciso bottle/label used
+  // 6c. Catalog bottle — real photo of our own bottle (its label still says Narciso) used
   // for every fragrance in the catalog (the business sells one bottle
   // format across all "inspired by" scents). This replaces an older photo
   // of the same bottle: the real hardware changed from a round ball cap to

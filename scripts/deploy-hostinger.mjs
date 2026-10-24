@@ -9,7 +9,7 @@
 // Manager antes de asumir la raiz.
 //
 // Uso:
-//   FTP_HOST=... FTP_USER=... FTP_PASSWORD=... FTP_TARGET_DIR=/domains/narcisoparfum.com/public_html node scripts/deploy-hostinger.mjs
+//   FTP_HOST=... FTP_USER=... FTP_PASSWORD=... FTP_TARGET_DIR=/domains/gentlemanparfum.com/public_html node scripts/deploy-hostinger.mjs
 import { Client } from 'basic-ftp'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

@@ -1,4 +1,4 @@
-// Catálogo real de Narciso Parfum. Datos provistos por el cliente — no se
+// Catálogo real de Gentleman Co (antes Narciso Parfum). Datos provistos por el cliente — no se
 // inventan nombres, precios ni categorías. Todas las fragancias comparten el
 // mismo frasco/etiqueta real (foto de source-material/botellabien.png), tal
 // como se venden realmente: mismo envase, distinta esencia por dentro.
@@ -14,7 +14,7 @@ export const CATEGORIES = {
 }
 
 // Fotos reales individuales por producto (agosto 2026): el cliente mandó
-// Desktop\portadas con una foto por referencia — mismo frasco Narciso real
+// Desktop\portadas con una foto por referencia — mismo frasco propio real
 // en primer plano, nítido, con el frasco de la fragancia real en la que se
 // inspira desenfocado de fondo. Se revisaron las 257 (1 se descartó por
 // defectuosa) y se generaron en src/assets/img/products/<id>.*. Después el
@@ -88,7 +88,7 @@ export const CATEGORIES = {
 // concluido. Las 7 versiones del PDF que el cliente reenvió con el tiempo
 // (`Catalogo_Narciso.pdf` a `_6`) muestran consistentemente ese mismo
 // frasco rosado correcto en la página 9. Ver nota fechada en
-// project_narciso_parfum.md para el detalle completo.
+// project_gentleman_co.md para el detalle completo.
 //
 // Con esta corrección, los 262 productos ya tienen foto propia — ver
 // ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
@@ -97,8 +97,8 @@ export const CATEGORIES = {
 // 2026-10-10 — fotos de los 17 agregados el 2026-10-06: el material que
 // llegó (`Downloads\Catalogo Perfumes\Nuevos sin fondo`, v2 del 7 de
 // octubre) trae el fondo dorado vacío y un recorte del frasco real de cada
-// inspiración, pero NO el frasco Narciso. Se compusieron con la misma
-// distribución que el resto (Narciso nítido adelante, inspiración
+// inspiración, pero NO el frasco propio. Se compusieron con la misma
+// distribución que el resto (frasco propio nítido adelante, inspiración
 // desenfocada atrás) usando `source-material/botella-oficial.png` — ver
 // `scripts/compose-nuevos-octubre.mjs` y `source-material/nuevos-octubre-2026/`.
 // El recorte de "Cloud" (Ariana Grande) que venía en el mismo lote no se

@@ -10,11 +10,15 @@ export const brand = {
   city: 'Ibagué, Tolima',
   whatsapp: '573229282884',
   whatsappDisplay: '322 928 2884',
-  instagramUrl:
-    'https://www.instagram.com/narcisoparfumoficial?igsi=MWFndjc4ZWs1N3J6dA%3D%3D&utm_source=qr',
-  instagramHandle: '@narcisoparfumoficial',
-  tiktokUrl: 'https://www.tiktok.com/@narciso.parfum.of?_r=1&_t=ZS-996dMDNbOGi',
-  tiktokHandle: '@narciso.parfum.of',
+  // Instagram/TikTok: las cuentas que había (@narcisoparfumoficial,
+  // @narciso.parfum.of) son de Narciso Parfum, que ahora tiene su propia web
+  // aparte (proyecto narciso2). A pedido del usuario (2026-10-24) se quitaron
+  // de Gentleman Co hasta tener sus cuentas propias: con null, el header, el
+  // footer y la sección de redes no muestran esos enlaces.
+  instagramUrl: null,
+  instagramHandle: null,
+  tiktokUrl: null,
+  tiktokHandle: null,
   address: {
     line1: 'Urbanización Santa Ana, Manzana 34 Casa 2',
     line2: 'Ibagué, Tolima, Colombia',

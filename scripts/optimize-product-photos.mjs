@@ -1,6 +1,6 @@
 // Genera las fotos reales individuales por producto (agosto 2026): el
 // cliente mandó Desktop\portadas con una imagen por código de referencia
-// (mismo frasco Narciso real en primer plano, nítido, con el frasco de la
+// (mismo frasco propio real en primer plano, nítido, con el frasco de la
 // fragancia real en la que se inspira desenfocado de fondo). Reemplazan la
 // foto genérica compartida `catalog-bottle.*` para los productos que tienen
 // una — el resto sigue usando `catalog-bottle` como respaldo.

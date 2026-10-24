@@ -80,24 +80,28 @@ export default function Header({ open, onOpenChange }) {
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
-          <a
-            href={brand.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram de Gentleman Co"
-            className="text-cream-200/70 transition-colors hover:text-gold-300"
-          >
-            <IconInstagram />
-          </a>
-          <a
-            href={brand.tiktokUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TikTok de Gentleman Co"
-            className="text-cream-200/70 transition-colors hover:text-gold-300"
-          >
-            <IconTikTok />
-          </a>
+          {brand.instagramUrl && (
+            <a
+              href={brand.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram de Gentleman Co"
+              className="text-cream-200/70 transition-colors hover:text-gold-300"
+            >
+              <IconInstagram />
+            </a>
+          )}
+          {brand.tiktokUrl && (
+            <a
+              href={brand.tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok de Gentleman Co"
+              className="text-cream-200/70 transition-colors hover:text-gold-300"
+            >
+              <IconTikTok />
+            </a>
+          )}
           <CartButton />
           <a
             href={waLink(waMessages.catalog)}
@@ -160,26 +164,32 @@ export default function Header({ open, onOpenChange }) {
                 {l.label}
               </SectionLink>
             ))}
-            <div className="mt-2 flex items-center gap-3 px-1 py-2">
-              <a
-                href={brand.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
-              >
-                <IconInstagram />
-              </a>
-              <a
-                href={brand.tiktokUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
-              >
-                <IconTikTok />
-              </a>
-            </div>
+            {(brand.instagramUrl || brand.tiktokUrl) && (
+              <div className="mt-2 flex items-center gap-3 px-1 py-2">
+                {brand.instagramUrl && (
+                  <a
+                    href={brand.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
+                  >
+                    <IconInstagram />
+                  </a>
+                )}
+                {brand.tiktokUrl && (
+                  <a
+                    href={brand.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="TikTok"
+                    className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
+                  >
+                    <IconTikTok />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </nav>
       </div>

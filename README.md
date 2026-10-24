@@ -2,13 +2,18 @@
 
 Sitio web de marca para **Gentleman Co** (perfumería inspirada de alta calidad, Ibagué, Tolima). React + Vite + Tailwind CSS, orientado 100% a conversión por WhatsApp.
 
+> **Este proyecto es Gentleman Co** (carpeta `PROYECTOS-CLAUDE\gentleman-co`, repo
+> `DEIV0510/gentleman-co`, en vivo en gentlemanparfum.com). La web nueva de **Narciso
+> Parfum** es otro proyecto aparte (`PROYECTOS-CLAUDE\narciso2`, repo `DEIV0510/narciso2`):
+> no mezclar cambios entre los dos.
+>
 > **Nota de rebranding (2026-09-18):** el negocio se llamaba "Narciso Parfum" hasta esta
 > fecha — todo el historial de este README (catálogo, fotos, decisiones de contenido) es
 > de esa época y sigue siendo válido tal cual, solo cambió el nombre de marca. El frasco
 > físico real que se fotografía y se despacha hoy sigue con la etiqueta "Narciso Parfum"
 > (no hay empaque nuevo todavía) — por eso las fotos de producto no se tocaron, mientras
 > que marca/textos/SEO/checkout ya dicen "Gentleman Co" en todo el sitio. Ver
-> `project_narciso_parfum.md` (memoria del proyecto) para el detalle completo de la
+> `project_gentleman_co.md` (memoria del proyecto) para el detalle completo de la
 > migración.
 
 ## Desarrollo
@@ -194,11 +199,11 @@ estudio con fondo plano a futuro.
 
 El cliente compartió `Desktop\portadas`: una foto real por cada uno de los
 259 códigos de la hoja de referencias (mismo esquema D/C/UNI de las
-secciones anteriores). Cada foto muestra **el mismo frasco Narciso real**
+secciones anteriores). Cada foto muestra **el mismo frasco propio real**
 (el de siempre) nítido en primer plano, con el frasco de la fragancia de
 diseñador en la que se inspira ese producto **desenfocado** de fondo — así
 cada producto tiene una foto distinta y reconocible sin dejar de mostrar
-el frasco Narciso real que se vende.
+el frasco propio real que se vende.
 
 **Nota para el cliente/futuras sesiones:** el frasco de fondo, aunque
 desenfocado, puede tener texto de marca parcialmente legible (ej. "TOM
@@ -212,7 +217,7 @@ por su cuenta esta sesión.
 Proceso:
 1. **Revisión visual de las 257 fotos** (259 códigos menos 2 filas vacías)
    con un `Workflow` de 13 agentes en paralelo (~20 fotos c/u, viendo cada
-   imagen con la herramienta de lectura) — criterio: frasco Narciso
+   imagen con la herramienta de lectura) — criterio: frasco propio
    completo (tapa a base), sin recortes feos, nítido. Solo **1 resultó
    defectuosa** (`C054`, Issey Miyake Pour Homme: un artefacto gráfico
    borroso superpuesto) — verificada a mano, se movió a
@@ -263,7 +268,7 @@ resolución async y un estado de carga en cada componente.
 
 El cliente compartió un segundo catálogo PDF (257 páginas, 1 producto por
 página, mismo esquema de códigos D/C/UNI) que resultó ser **otra sesión de
-fotos/render distinta** de la misma composición (frasco Narciso nítido +
+fotos/render distinta** de la misma composición (frasco propio nítido +
 frasco de la marca de inspiración desenfocado de fondo) — no la misma foto
 reprocesada. Pidió quedarse, por cada producto, con la que se viera mejor.
 
@@ -698,8 +703,8 @@ Fragrantica pero se dejaron en la sección que pidió.
 Hasta esta fecha los 17 usaban la foto genérica. El material que llegó
 (`Downloads\Catalogo Perfumes\Nuevos sin fondo`, versión v2 del 7 de
 octubre) trae el fondo dorado de estudio vacío y un recorte PNG del frasco
-real de cada inspiración, **sin el frasco Narciso**. Como todas las demás
-fotos del catálogo muestran el frasco Narciso nítido adelante a la derecha y
+real de cada inspiración, **sin el frasco propio**. Como todas las demás
+fotos del catálogo muestran el frasco propio nítido adelante a la derecha y
 la inspiración desenfocada atrás, se compusieron así con
 `scripts/compose-nuevos-octubre.mjs`:
 
@@ -709,7 +714,7 @@ la inspiración desenfocada atrás, se compusieron así con
 - Inspiración (`source-material/nuevos-octubre-2026/<id>.png`): sin el halo
   claro del recorte (alfa erosionado 2 px), luz cálida con brillo ajustado a
   lo claro del frasco, desenfoque leve, reflejo en el piso y sombra.
-- Frasco Narciso: el recorte real `source-material/botella-oficial.png` con
+- Frasco propio: el recorte real `source-material/botella-oficial.png` con
   la luz dorada de la escena (lado izquierdo en sombra, borde derecho
   iluminado), reflejo y sombra de contacto.
 - Salida con el pipeline de siempre (1100 px; webp q84, avif q58, jpeg q86).

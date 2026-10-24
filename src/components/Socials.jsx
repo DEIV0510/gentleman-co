@@ -7,6 +7,8 @@ import { Grain } from './HalloweenFx'
 import { BatFlight } from './HalloweenArt'
 
 export default function Socials() {
+  // Sin cuentas propias de Gentleman Co no se muestra la sección (ver site.js).
+  if (!brand.instagramUrl && !brand.tiktokUrl) return null
   return (
     <section
       aria-labelledby="socials-heading"

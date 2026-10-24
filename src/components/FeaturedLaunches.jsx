@@ -11,7 +11,7 @@ import { HALLOWEEN_ACTIVE } from '../data/campaign'
 // (Torino21, Unstoppable Hong Kong). Antes decían "Próximamente" y enlazaban
 // a WhatsApp — ya son productos reales del catálogo con precio, así que
 // ahora dicen "Nuevo" y enlazan directo a su ficha real (ver
-// project_narciso_parfum.md, entrada del 10 de sept sobre esto).
+// project_gentleman_co.md, entrada del 10 de sept sobre esto).
 const items = [
   {
     id: 'torino21-xerjoff-hombre',

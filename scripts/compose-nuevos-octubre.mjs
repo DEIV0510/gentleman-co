@@ -1,10 +1,10 @@
 // Fotos de los 17 perfumes agregados el 2026-10-06 (ver products.js).
 //
 // El material que llegó (`Downloads\Catalogo Perfumes\Nuevos sin fondo`,
-// versión v2 del 7 de octubre) NO trae el frasco Narciso: son el fondo
+// versión v2 del 7 de octubre) NO trae nuestro frasco: son el fondo
 // dorado de estudio vacío ("00 - fondo limpio (sin perfume)") y un recorte
 // PNG del frasco real de cada fragancia de inspiración. Todo el resto del
-// catálogo muestra el frasco Narciso nítido adelante a la derecha y el de
+// catálogo muestra nuestro frasco nítido adelante a la derecha y el de
 // inspiración desenfocado atrás a la izquierda, así que aquí se arma esa
 // misma composición:
 //
@@ -30,7 +30,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const SRC = path.join(ROOT, 'source-material', 'nuevos-octubre-2026')
 const PLATE = path.join(SRC, 'fondo-limpio.jpg')
-const NARCISO = path.join(ROOT, 'source-material', 'botella-oficial.png')
+const BOTTLE = path.join(ROOT, 'source-material', 'botella-oficial.png')
 const OUT = path.join(ROOT, 'src', 'assets', 'img', 'products')
 const PREVIEW = process.argv[2]
 
@@ -207,7 +207,7 @@ function shadow(canvas, CW, CH, cx, cy, rx, ry, strength) {
   }
 }
 
-async function compose(inspFile, plate, narciso) {
+async function compose(inspFile, plate, bottle) {
   const CW = plate.info.width
   const CH = plate.info.height
   const canvas = new Float32Array(CW * CH * 3)
@@ -227,10 +227,10 @@ async function compose(inspFile, plate, narciso) {
   const inspB = await blurLayer(insp, INSP.blur)
   over(canvas, CW, CH, inspB, inspLeft - inspB.pad, INSP.base - insp.h - inspB.pad)
 
-  // Frasco Narciso: adelante a la derecha, nítido.
-  shadow(canvas, CW, CH, NAR.left + narciso.w / 2, NAR.base, narciso.w * 0.56, 12, 0.75)
-  over(canvas, CW, CH, narciso.reflection, NAR.left - narciso.reflection.pad, NAR.base - narciso.reflection.pad, (x, y) => Math.max(0, NAR.reflect * Math.pow(Math.max(0, 1 - (y - narciso.reflection.pad) / 210), 1.6)))
-  over(canvas, CW, CH, narciso, NAR.left, NAR.base - narciso.h)
+  // Nuestro frasco: adelante a la derecha, nítido.
+  shadow(canvas, CW, CH, NAR.left + bottle.w / 2, NAR.base, bottle.w * 0.56, 12, 0.75)
+  over(canvas, CW, CH, bottle.reflection, NAR.left - bottle.reflection.pad, NAR.base - bottle.reflection.pad, (x, y) => Math.max(0, NAR.reflect * Math.pow(Math.max(0, 1 - (y - bottle.reflection.pad) / 210), 1.6)))
+  over(canvas, CW, CH, bottle, NAR.left, NAR.base - bottle.h)
 
   const out = Buffer.alloc(CW * CH * 3)
   for (let i = 0; i < out.length; i++) out[i] = clamp(Math.round(canvas[i]))
@@ -242,16 +242,16 @@ async function run() {
   if (PREVIEW) mkdirSync(PREVIEW, { recursive: true })
   const plate = await sharp(PLATE).raw().toBuffer({ resolveWithObject: true })
 
-  // El frasco Narciso es el mismo en las 17: se prepara una sola vez.
-  const narciso = await loadLayer(NARCISO, NAR)
-  grade(narciso, { mul: NAR.mul })
-  sideShade(narciso, { left: 0.78, right: 1 })
-  rimLight(narciso, { color: [255, 160, 70], strength: 0.45, width: 9 })
-  narciso.reflection = await blurLayer(flipV(narciso), 1.2)
+  // Nuestro frasco es el mismo en las 17: se prepara una sola vez.
+  const bottle = await loadLayer(BOTTLE, NAR)
+  grade(bottle, { mul: NAR.mul })
+  sideShade(bottle, { left: 0.78, right: 1 })
+  rimLight(bottle, { color: [255, 160, 70], strength: 0.45, width: 9 })
+  bottle.reflection = await blurLayer(flipV(bottle), 1.2)
 
   const ids = readdirSync(SRC).filter((f) => f.endsWith('.png')).map((f) => f.replace(/\.png$/, ''))
   for (const id of ids) {
-    const composed = await compose(path.join(SRC, `${id}.png`), plate, narciso)
+    const composed = await compose(path.join(SRC, `${id}.png`), plate, bottle)
     if (PREVIEW) await sharp(composed).jpeg({ quality: 92, mozjpeg: true }).toFile(path.join(PREVIEW, `${id}.jpg`))
     const pipeline = sharp(composed).resize({ width: 1100, withoutEnlargement: true })
     await pipeline.clone().webp({ quality: 84 }).toFile(path.join(OUT, `${id}.webp`))
