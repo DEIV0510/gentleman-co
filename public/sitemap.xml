@@ -726,6 +726,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://gentlemanparfum.com/perfumes/hawas-black-rasasi-hombre</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://gentlemanparfum.com/perfumes/1-million-black-paco-rabanne-hombre</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://gentlemanparfum.com/perfumes/ck-in2u-calvin-klein-mujer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

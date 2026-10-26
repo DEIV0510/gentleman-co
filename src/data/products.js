@@ -357,6 +357,13 @@ const caballeroAgosto2026 = [
   { title: 'Uomo Born in Roma Intense', brand: 'Valentino', style: 'Intenso' },
   { title: 'Nitro Red Intensely', brand: 'Dumont', style: 'Fresco' },
   { title: 'Hawas for Him', brand: 'Rasasi', style: 'Fresco' },
+  // 2026-10-26: pedidos por el usuario para Gentleman, Caballero. Notas
+  // verificadas en varias tiendas (ver fragranceInfo.js); sin foto propia
+  // todavía (usan el frasco Gentleman genérico, `catalog-bottle`). En la
+  // misma lista venía "Good girl tradicional": ya existe como "Good Girl"
+  // (Carolina Herrera) en Dama, no se duplicó.
+  { title: 'Hawas Black', brand: 'Rasasi', style: 'Intenso' },
+  { title: '1 Million Black', brand: 'Paco Rabanne', style: 'Dulce' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [

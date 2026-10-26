@@ -41,11 +41,12 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **Hoy son 283 productos y los 283 tienen
-foto propia** (ver "Fotos individuales por producto" y "Fotos del lote de
-octubre" más abajo); la foto genérica compartida `catalog-bottle.*`
-(`source-material/botella-oficial.png`) queda solo como respaldo si algún
-día falta un archivo. Her Elixir (Burberry), que estuvo un tiempo sin foto
+faltaban), mismo precio plano. **Hoy son 285 productos; 283 tienen foto
+propia** (ver "Fotos individuales por producto" y "Fotos del lote de
+octubre" más abajo). Los 2 agregados el 26 de octubre (Hawas Black y 1
+Million Black) usan por ahora la foto genérica compartida `catalog-bottle.*`
+(el frasco Gentleman recortado, `source-material/botella-gentleman.png`),
+que también es el respaldo si algún día falta un archivo. Her Elixir (Burberry), que estuvo un tiempo sin foto
 porque varias tomas mostraban el frasco equivocado, se resolvió el
 2026-09-05 (ver "Verificación frasco↔nombre", "Lote
 NARCISO_NUEVOS_CABALLEROS", "Correcciones con fotos de referencia" y
@@ -826,9 +827,9 @@ src/
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
   data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
-  data/products.js  catálogo (283 productos), formatCOP, searchProducts,
+  data/products.js  catálogo (285 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
-  data/fragranceInfo.js  perfil olfativo real por fragancia — 280 de los 283
+  data/fragranceInfo.js  perfil olfativo real por fragancia — 282 de los 285
                     productos, ver "Fichas de perfil olfativo completas"
   data/campaign.js  interruptor y rótulos de la campaña estacional (Halloween)
   hooks/            useReveal (scroll reveal), useInView (monta efectos al ver

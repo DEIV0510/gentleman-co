@@ -2814,6 +2814,28 @@ export const fragranceInfo = {
     timeOfDay: ["Día", "Tarde"],
     profile: "Fresca, frutal y acuática: manzana, bergamota y limón con un toque de canela, corazón acuoso de ciruela y azahar con cardamomo, y fondo almizclado y ambarado con madera flotada; juvenil y veraniega.",
   },
+  // 2026-10-26 — notas coincidentes en Basenotes, Tendance Parfums, Notino y
+  // otras tiendas (una ficha de perfume.com con otra pirámide se descartó).
+  // Año de lanzamiento sin dos fuentes: no se muestra.
+  'hawas-black-rasasi-hombre': {
+    family: "Chipre afrutada",
+    topNotes: ["Bergamota", "Piña", "Pomelo"],
+    heartNotes: ["Cedro", "Pachulí", "Jazmín"],
+    baseNotes: ["Musgo de roble", "Ámbar", "Notas amaderadas"],
+    concentration: "Eau de Parfum",
+    profile: "Chipre afrutada de carácter oscuro: apertura cítrica de bergamota, piña y pomelo, corazón de cedro, pachulí y jazmín, y un fondo de musgo de roble, ámbar y maderas; la cara más amaderada y seria de la línea Hawas.",
+  },
+  // 2026-10-26 — pirámide oficial reproducida por Lookfantastic, Dillard's y
+  // Harrods (familia ámbar amaderada afrutada). Rabanne la presenta como una
+  // versión más oscura e intensa del 1 Million original.
+  '1-million-black-paco-rabanne-hombre': {
+    family: "Ámbar amaderada afrutada",
+    topNotes: ["Piña asada", "Naranja sanguina", "Cardamomo"],
+    heartNotes: ["Vainilla", "Coco", "Salvia esclarea"],
+    baseNotes: ["Madera de ébano", "Pachulí", "Haba tonka"],
+    concentration: "Eau de Parfum",
+    profile: "Versión más oscura e intensa del 1 Million: abre con piña asada, naranja sanguina y cardamomo, pasa a un corazón cremoso de vainilla, coco y salvia esclarea, y se asienta sobre madera de ébano, pachulí y haba tonka; golosa y amaderada.",
+  },
   'vulcan-baie-french-avenue-mujer': {
     family: "Frutal Floral",
     topNotes: ["Mora", "Grosella Negra", "Romero", "Bergamota"],
