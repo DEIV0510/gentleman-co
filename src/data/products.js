@@ -159,6 +159,10 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'the-most-wanted-azzaro-hombre', 'uomo-born-in-roma-intense-valentino-hombre', 'nitro-red-intensely-dumont-hombre', 'hawas-for-him-rasasi-hombre',
   'vulcan-baie-french-avenue-mujer', 'yum-boujee-marshmallow-81-kayali-mujer', 'qaed-al-fursan-lattafa-unisex', 'drunk-lovers-born-to-stand-out-unisex',
   'toxic-desire-korbaj-unisex',
+  // 2026-10-26: compuestas igual, con el frasco original recortado de la foto
+  // oficial de una tienda (Notino para Hawas Black, Lookfantastic para 1
+  // Million Black), a pedido del usuario.
+  'hawas-black-rasasi-hombre', '1-million-black-paco-rabanne-hombre',
 ])
 
 // `style` = familia olfativa general (Fresco / Dulce / Intenso / Elegante),
@@ -358,10 +362,10 @@ const caballeroAgosto2026 = [
   { title: 'Nitro Red Intensely', brand: 'Dumont', style: 'Fresco' },
   { title: 'Hawas for Him', brand: 'Rasasi', style: 'Fresco' },
   // 2026-10-26: pedidos por el usuario para Gentleman, Caballero. Notas
-  // verificadas en varias tiendas (ver fragranceInfo.js); sin foto propia
-  // todavía (usan el frasco Gentleman genérico, `catalog-bottle`). En la
-  // misma lista venía "Good girl tradicional": ya existe como "Good Girl"
-  // (Carolina Herrera) en Dama, no se duplicó.
+  // verificadas en varias tiendas (ver fragranceInfo.js); foto compuesta como
+  // las del lote de octubre (ver PRODUCTS_WITH_OWN_PHOTO). En la misma lista
+  // venía "Good girl tradicional": ya existe como "Good Girl" (Carolina
+  // Herrera) en Dama, no se duplicó.
   { title: 'Hawas Black', brand: 'Rasasi', style: 'Intenso' },
   { title: '1 Million Black', brand: 'Paco Rabanne', style: 'Dulce' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))

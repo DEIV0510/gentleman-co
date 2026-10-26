@@ -41,12 +41,14 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **Hoy son 285 productos; 283 tienen foto
-propia** (ver "Fotos individuales por producto" y "Fotos del lote de
+faltaban), mismo precio plano. **Hoy son 285 productos y los 285 tienen
+foto propia** (ver "Fotos individuales por producto" y "Fotos del lote de
 octubre" más abajo). Los 2 agregados el 26 de octubre (Hawas Black y 1
-Million Black) usan por ahora la foto genérica compartida `catalog-bottle.*`
-(el frasco Gentleman recortado, `source-material/botella-gentleman.png`),
-que también es el respaldo si algún día falta un archivo. Her Elixir (Burberry), que estuvo un tiempo sin foto
+Million Black) se compusieron igual que el lote de octubre, con el frasco
+original recortado de la foto oficial de una tienda (Notino y Lookfantastic;
+el vidrio transparente quedó semitransparente para que no se vea el fondo
+blanco de la foto original). La foto genérica `catalog-bottle.*` (el frasco
+Gentleman recortado) queda como respaldo si algún día falta un archivo. Her Elixir (Burberry), que estuvo un tiempo sin foto
 porque varias tomas mostraban el frasco equivocado, se resolvió el
 2026-09-05 (ver "Verificación frasco↔nombre", "Lote
 NARCISO_NUEVOS_CABALLEROS", "Correcciones con fotos de referencia" y
