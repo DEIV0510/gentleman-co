@@ -58,7 +58,21 @@ let uploaded = 0
 let skipped = 0
 let i = 0
 let retries = 0
-await connect()
+// La primera conexión también puede fallar (Hostinger corta a veces): se
+// reintenta igual que durante la subida, en vez de terminar con error.
+for (let attempt = 1; ; attempt++) {
+  try {
+    await connect()
+    break
+  } catch (err) {
+    console.log(`Conexión falló: ${err.code || err.message} — intento ${attempt}/8`)
+    if (attempt >= 8) {
+      console.error('No se pudo conectar al FTP; no se subió nada.')
+      process.exit(1)
+    }
+    await new Promise((r) => setTimeout(r, 2000 * attempt))
+  }
+}
 while (i < queue.length) {
   const f = queue[i]
   const dir = path.posix.dirname(f.rel) === '.' ? '' : path.posix.dirname(f.rel)
